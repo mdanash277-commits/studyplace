@@ -1,0 +1,1725 @@
+```javascript
+/* =========================================================
+   STUDYHUB
+   CBSE + NCERT STUDY APP
+   2026–27 VERSION
+
+   Features:
+   ✓ Classes 1–12
+   ✓ Subject selection
+   ✓ Chapter system
+   ✓ Notes
+   ✓ Important Questions
+   ✓ MCQs
+   ✓ Quiz
+   ✓ Search
+   ✓ Bookmark
+   ✓ Progress
+   ✓ Dark Mode
+   ✓ Official NCERT textbook links
+   ✓ Mobile friendly
+========================================================= */
+
+
+/* =========================================================
+   1. APP CONFIGURATION
+========================================================= */
+
+const APP = {
+    name: "StudyHub",
+    version: "2026.1",
+    board: "CBSE + NCERT",
+    academicYear: "2026-27",
+
+    ncertBooks:
+        "https://ncert.nic.in/textbook.php",
+
+    cbseCurriculum:
+        "https://cbseacademic.nic.in/curriculum_2027.html"
+};
+
+
+/* =========================================================
+   2. CLASSES
+========================================================= */
+
+const CLASSES = Array.from(
+    { length: 12 },
+    (_, i) => ({
+        id: i + 1,
+        name: `Class ${i + 1}`
+    })
+);
+
+
+/* =========================================================
+   3. SUBJECT DATABASE
+=========================================================
+
+   This is intentionally separated from the app engine.
+
+   When the official curriculum changes, you only update
+   this database instead of rewriting the whole application.
+========================================================= */
+
+const SUBJECTS = {
+
+    1: [
+        "Hindi",
+        "English",
+        "Mathematics",
+        "Urdu"
+    ],
+
+    2: [
+        "Hindi",
+        "English",
+        "Mathematics",
+        "Urdu"
+    ],
+
+    3: [
+        "Hindi",
+        "English",
+        "Mathematics",
+        "Environmental Studies",
+        "Urdu"
+    ],
+
+    4: [
+        "Hindi",
+        "English",
+        "Mathematics",
+        "Environmental Studies",
+        "Urdu"
+    ],
+
+    5: [
+        "Hindi",
+        "English",
+        "Mathematics",
+        "Environmental Studies",
+        "Urdu"
+    ],
+
+    6: [
+        "Hindi",
+        "English",
+        "Mathematics",
+        "Science",
+        "Social Science",
+        "Urdu"
+    ],
+
+    7: [
+        "Hindi",
+        "English",
+        "Mathematics",
+        "Science",
+        "Social Science",
+        "Urdu"
+    ],
+
+    8: [
+        "Hindi",
+        "English",
+        "Mathematics",
+        "Science",
+        "Social Science",
+        "Urdu"
+    ],
+
+    9: [
+        "English",
+        "Hindi",
+        "Mathematics",
+        "Science",
+        "Social Science",
+        "Urdu"
+    ],
+
+    10: [
+        "English",
+        "Hindi",
+        "Mathematics",
+        "Science",
+        "Social Science",
+        "Urdu"
+    ],
+
+    11: [
+        "English",
+        "Hindi",
+        "Physics",
+        "Chemistry",
+        "Mathematics",
+        "Biology",
+        "Computer Science",
+        "Economics",
+        "Accountancy",
+        "Business Studies",
+        "Political Science",
+        "History",
+        "Geography"
+    ],
+
+    12: [
+        "English",
+        "Hindi",
+        "Physics",
+        "Chemistry",
+        "Mathematics",
+        "Biology",
+        "Computer Science",
+        "Economics",
+        "Accountancy",
+        "Business Studies",
+        "Political Science",
+        "History",
+        "Geography"
+    ]
+};
+
+
+/* =========================================================
+   4. CHAPTER DATABASE
+=========================================================
+
+   IMPORTANT:
+
+   Do NOT copy complete NCERT textbook chapters here.
+
+   Store ORIGINAL:
+   - short notes
+   - explanations
+   - practice questions
+   - MCQs
+
+   Official textbook can be opened separately.
+========================================================= */
+
+const STUDY_DATA = {
+
+    9: {
+
+        Mathematics: {
+
+            chapters: [
+
+                {
+                    id: "real-numbers",
+
+                    name: "Number Systems",
+
+                    notes: `
+                        Real numbers include rational and irrational numbers.
+
+                        Rational numbers can be represented in the form p/q,
+                        where q is not equal to zero.
+
+                        Irrational numbers cannot be represented in this form.
+                    `,
+
+                    importantQuestions: [
+
+                        {
+                            level: 5,
+                            question:
+                                "Explain the difference between rational and irrational numbers."
+                        },
+
+                        {
+                            level: 5,
+                            question:
+                                "Represent a rational number on the number line."
+                        },
+
+                        {
+                            level: 4,
+                            question:
+                                "Explain why the square root of a non-perfect square is irrational."
+                        }
+
+                    ],
+
+                    mcqs: [
+
+                        {
+                            question:
+                                "Which of the following is irrational?",
+
+                            options: [
+                                "1/2",
+                                "3",
+                                "√2",
+                                "0"
+                            ],
+
+                            answer: 2
+                        }
+
+                    ]
+                },
+
+                {
+                    id: "polynomials",
+
+                    name: "Polynomials",
+
+                    notes: `
+                        A polynomial is an algebraic expression containing
+                        variables, constants and non-negative integer powers.
+
+                        Degree of a polynomial is the highest power of
+                        the variable.
+                    `,
+
+                    importantQuestions: [
+
+                        {
+                            level: 5,
+                            question:
+                                "What is a polynomial? Explain with examples."
+                        },
+
+                        {
+                            level: 5,
+                            question:
+                                "Find the zero of a linear polynomial."
+                        }
+
+                    ],
+
+                    mcqs: [
+
+                        {
+                            question:
+                                "What is the degree of 5x² + 3x + 1?",
+
+                            options: [
+                                "1",
+                                "2",
+                                "3",
+                                "0"
+                            ],
+
+                            answer: 1
+                        }
+
+                    ]
+                }
+
+            ]
+        },
+
+
+        Science: {
+
+            chapters: [
+
+                {
+                    id: "matter",
+
+                    name: "Matter",
+
+                    notes: `
+                        Matter is anything that has mass and occupies space.
+
+                        Matter commonly exists as solid, liquid and gas.
+
+                        The particles of matter are continuously moving.
+                    `,
+
+                    importantQuestions: [
+
+                        {
+                            level: 5,
+                            question:
+                                "Explain the characteristics of particles of matter."
+                        },
+
+                        {
+                            level: 4,
+                            question:
+                                "Differentiate between solids, liquids and gases."
+                        }
+
+                    ],
+
+                    mcqs: [
+
+                        {
+                            question:
+                                "Which state of matter has a fixed shape?",
+
+                            options: [
+                                "Solid",
+                                "Liquid",
+                                "Gas",
+                                "None"
+                            ],
+
+                            answer: 0
+                        }
+
+                    ]
+                },
+
+                {
+                    id: "cell",
+
+                    name: "The Fundamental Unit of Life",
+
+                    notes: `
+                        The cell is the basic structural and functional unit
+                        of living organisms.
+
+                        Cells contain structures called organelles which
+                        perform different functions.
+                    `,
+
+                    importantQuestions: [
+
+                        {
+                            level: 5,
+                            question:
+                                "Why is the cell called the basic unit of life?"
+                        },
+
+                        {
+                            level: 5,
+                            question:
+                                "Explain the functions of the nucleus."
+                        }
+
+                    ],
+
+                    mcqs: [
+
+                        {
+                            question:
+                                "Which organelle controls most activities of a cell?",
+
+                            options: [
+                                "Nucleus",
+                                "Cell wall",
+                                "Vacuole",
+                                "Ribosome"
+                            ],
+
+                            answer: 0
+                        }
+
+                    ]
+                }
+
+            ]
+        }
+
+    },
+
+
+    10: {
+
+        Mathematics: {
+
+            chapters: [
+
+                {
+                    id: "real-numbers",
+
+                    name: "Real Numbers",
+
+                    notes: `
+                        Real numbers include rational and irrational numbers.
+
+                        Important concepts include Euclid's division
+                        algorithm and the Fundamental Theorem of Arithmetic.
+                    `,
+
+                    importantQuestions: [
+
+                        {
+                            level: 5,
+                            question:
+                                "State and explain Euclid's division lemma."
+                        },
+
+                        {
+                            level: 5,
+                            question:
+                                "Explain the Fundamental Theorem of Arithmetic."
+                        }
+
+                    ],
+
+                    mcqs: [
+
+                        {
+                            question:
+                                "The HCF of two numbers can be found using:",
+
+                            options: [
+                                "Euclid's algorithm",
+                                "Only multiplication",
+                                "Only division",
+                                "None"
+                            ],
+
+                            answer: 0
+                        }
+
+                    ]
+                }
+
+            ]
+        },
+
+        Science: {
+
+            chapters: [
+
+                {
+                    id: "chemical-reactions",
+
+                    name: "Chemical Reactions",
+
+                    notes: `
+                        A chemical reaction is a process in which one or
+                        more substances change into new substances.
+
+                        Chemical reactions can be represented using
+                        chemical equations.
+                    `,
+
+                    importantQuestions: [
+
+                        {
+                            level: 5,
+                            question:
+                                "What is a chemical reaction? Explain with an example."
+                        },
+
+                        {
+                            level: 5,
+                            question:
+                                "Explain oxidation and reduction."
+                        }
+
+                    ],
+
+                    mcqs: [
+
+                        {
+                            question:
+                                "A chemical equation represents:",
+
+                            options: [
+                                "A chemical reaction",
+                                "Only physical change",
+                                "Only temperature",
+                                "Only mass"
+                            ],
+
+                            answer: 0
+                        }
+
+                    ]
+                }
+
+            ]
+        }
+
+    }
+
+};
+
+
+/* =========================================================
+   5. USER DATA
+========================================================= */
+
+const STORAGE_KEY = "studyhub_2026";
+
+let userData =
+    JSON.parse(
+        localStorage.getItem(STORAGE_KEY)
+    ) || {
+
+        bookmarks: [],
+
+        completed: [],
+
+        quizScores: [],
+
+        darkMode: false
+
+    };
+
+
+function saveUserData() {
+
+    localStorage.setItem(
+        STORAGE_KEY,
+        JSON.stringify(userData)
+    );
+
+}
+
+
+/* =========================================================
+   6. DOM HELPERS
+========================================================= */
+
+function $(id) {
+
+    return document.getElementById(id);
+
+}
+
+
+function createElement(tag, className = "") {
+
+    const element =
+        document.createElement(tag);
+
+    if (className) {
+
+        element.className = className;
+
+    }
+
+    return element;
+
+}
+
+
+/* =========================================================
+   7. INITIALIZE APP
+========================================================= */
+
+function initializeStudyHub() {
+
+    console.log(
+        `${APP.name} ${APP.version} started`
+    );
+
+    createAppInterface();
+
+    loadClasses();
+
+    if (userData.darkMode) {
+
+        document.body.classList.add(
+            "dark-mode"
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   8. CREATE INTERFACE
+========================================================= */
+
+function createAppInterface() {
+
+    document.body.innerHTML = `
+
+        <header class="app-header">
+
+            <div>
+
+                <h1>📚 StudyHub</h1>
+
+                <p>
+                    CBSE + NCERT
+                    ${APP.academicYear}
+                </p>
+
+            </div>
+
+            <button
+                id="themeButton"
+                onclick="toggleDarkMode()">
+
+                🌙
+
+            </button>
+
+        </header>
+
+
+        <main class="app-container">
+
+            <section class="welcome-card">
+
+                <h2>
+                    Learn Smarter 🚀
+                </h2>
+
+                <p>
+                    Notes • Important Questions • MCQs • Quiz
+                </p>
+
+            </section>
+
+
+            <section class="selection-card">
+
+                <select id="classSelect">
+                    <option value="">
+                        Select Class
+                    </option>
+                </select>
+
+
+                <select id="subjectSelect">
+
+                    <option value="">
+                        Select Subject
+                    </option>
+
+                </select>
+
+
+                <input
+                    id="searchInput"
+                    type="search"
+                    placeholder="🔍 Search chapters, notes or questions..."
+                >
+
+            </section>
+
+
+            <section class="navigation">
+
+                <button
+                    onclick="showView('notes')">
+
+                    📖 Notes
+
+                </button>
+
+
+                <button
+                    onclick="showView('questions')">
+
+                    ⭐ Important Questions
+
+                </button>
+
+
+                <button
+                    onclick="showView('quiz')">
+
+                    🧠 Quiz
+
+                </button>
+
+
+                <button
+                    onclick="showView('bookmarks')">
+
+                    ❤️ Bookmarks
+
+                </button>
+
+
+                <button
+                    onclick="showView('progress')">
+
+                    📊 Progress
+
+                </button>
+
+            </section>
+
+
+            <section id="mainContent">
+
+                <div class="empty-state">
+
+                    Select your class and subject.
+
+                </div>
+
+            </section>
+
+
+            <section class="official-links">
+
+                <h3>Official Resources</h3>
+
+                <a
+                    href="${APP.ncertBooks}"
+                    target="_blank">
+
+                    📘 NCERT Textbooks
+
+                </a>
+
+                <a
+                    href="${APP.cbseCurriculum}"
+                    target="_blank">
+
+                    📚 CBSE 2026–27 Curriculum
+
+                </a>
+
+            </section>
+
+        </main>
+
+    `;
+
+
+    $("classSelect")
+        .addEventListener(
+            "change",
+            handleClassChange
+        );
+
+
+    $("subjectSelect")
+        .addEventListener(
+            "change",
+            renderCurrentSubject
+        );
+
+
+    $("searchInput")
+        .addEventListener(
+            "input",
+            renderCurrentSubject
+        );
+
+}
+
+
+/* =========================================================
+   9. LOAD CLASSES
+========================================================= */
+
+function loadClasses() {
+
+    const select =
+        $("classSelect");
+
+    CLASSES.forEach(item => {
+
+        const option =
+            document.createElement("option");
+
+        option.value =
+            item.id;
+
+        option.textContent =
+            item.name;
+
+        select.appendChild(option);
+
+    });
+
+}
+
+
+/* =========================================================
+   10. CLASS CHANGE
+========================================================= */
+
+function handleClassChange() {
+
+    const classNumber =
+        Number($("classSelect").value);
+
+    const subjectSelect =
+        $("subjectSelect");
+
+
+    subjectSelect.innerHTML = `
+
+        <option value="">
+            Select Subject
+        </option>
+
+    `;
+
+
+    if (!classNumber) {
+
+        return;
+
+    }
+
+
+    const subjects =
+        SUBJECTS[classNumber] || [];
+
+
+    subjects.forEach(subject => {
+
+        const option =
+            document.createElement("option");
+
+        option.value =
+            subject;
+
+        option.textContent =
+            subject;
+
+        subjectSelect.appendChild(option);
+
+    });
+
+
+    $("mainContent").innerHTML = `
+
+        <div class="empty-state">
+
+            Now select a subject.
+
+        </div>
+
+    `;
+
+}
+
+
+/* =========================================================
+   11. GET CURRENT DATA
+========================================================= */
+
+function getCurrentData() {
+
+    const classNumber =
+        Number($("classSelect").value);
+
+    const subject =
+        $("subjectSelect").value;
+
+
+    if (
+        !classNumber ||
+        !subject
+    ) {
+
+        return null;
+
+    }
+
+
+    return (
+        STUDY_DATA[classNumber] &&
+        STUDY_DATA[classNumber][subject]
+    ) || null;
+
+}
+
+
+/* =========================================================
+   12. RENDER SUBJECT
+========================================================= */
+
+function renderCurrentSubject() {
+
+    const data =
+        getCurrentData();
+
+
+    if (!data) {
+
+        $("mainContent").innerHTML = `
+
+            <div class="empty-state">
+
+                📚 Content is being prepared for this
+                class/subject.
+
+                <br><br>
+
+                Use the official NCERT textbook link
+                above for the current textbook.
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    showView("notes");
+
+}
+
+
+/* =========================================================
+   13. NOTES VIEW
+========================================================= */
+
+function renderNotes() {
+
+    const data =
+        getCurrentData();
+
+
+    if (!data) {
+
+        renderCurrentSubject();
+
+        return;
+
+    }
+
+
+    const search =
+        $("searchInput")
+        .value
+        .toLowerCase()
+        .trim();
+
+
+    let chapters =
+        data.chapters || [];
+
+
+    if (search) {
+
+        chapters =
+            chapters.filter(chapter =>
+
+                chapter.name
+                    .toLowerCase()
+                    .includes(search)
+
+                ||
+
+                chapter.notes
+                    .toLowerCase()
+                    .includes(search)
+
+            );
+
+    }
+
+
+    if (!chapters.length) {
+
+        $("mainContent").innerHTML = `
+
+            <div class="empty-state">
+
+                No matching notes found.
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    $("mainContent").innerHTML =
+
+        chapters.map(chapter => `
+
+            <article class="study-card">
+
+                <div class="card-header">
+
+                    <span class="badge">
+                        📖 NOTES
+                    </span>
+
+                    <button
+                        onclick="bookmarkChapter('${chapter.id}')">
+
+                        ${
+                            isBookmarked(chapter.id)
+                                ? "❤️"
+                                : "🤍"
+                        }
+
+                    </button>
+
+                </div>
+
+
+                <h2>
+                    ${escapeHTML(chapter.name)}
+                </h2>
+
+
+                <p class="notes">
+
+                    ${escapeHTML(
+                        chapter.notes
+                    )}
+
+                </p>
+
+
+                <button
+                    class="complete-button"
+                    onclick="markCompleted('${chapter.id}')">
+
+                    ✓ Mark as Completed
+
+                </button>
+
+            </article>
+
+        `)
+        .join("");
+
+}
+
+
+/* =========================================================
+   14. IMPORTANT QUESTIONS
+========================================================= */
+
+function renderQuestions() {
+
+    const data =
+        getCurrentData();
+
+
+    if (!data) {
+
+        renderCurrentSubject();
+
+        return;
+
+    }
+
+
+    $("mainContent").innerHTML = `
+
+        <div class="question-intro">
+
+            <h2>⭐ Most Important Questions</h2>
+
+            <p>
+                Questions are arranged by priority.
+            </p>
+
+        </div>
+
+
+        ${
+            data.chapters
+            .flatMap(
+                chapter =>
+                    chapter.importantQuestions.map(
+                        q => ({
+
+                            ...q,
+
+                            chapter:
+                                chapter.name
+
+                        })
+                    )
+            )
+            .sort(
+                (a, b) =>
+                    b.level - a.level
+            )
+            .map(
+                (q, index) => `
+
+                    <article
+                        class="question-card">
+
+                        <span class="priority">
+
+                            ${
+                                q.level === 5
+                                    ? "🔥 VERY IMPORTANT"
+                                    : q.level === 4
+                                    ? "⭐ IMPORTANT"
+                                    : "📝 PRACTICE"
+                            }
+
+                        </span>
+
+
+                        <small>
+
+                            ${escapeHTML(q.chapter)}
+
+                        </small>
+
+
+                        <h3>
+
+                            Q${index + 1}.
+                            ${escapeHTML(q.question)}
+
+                        </h3>
+
+                    </article>
+
+                `
+            )
+            .join("")
+        }
+
+    `;
+
+}
+
+
+/* =========================================================
+   15. QUIZ
+========================================================= */
+
+function renderQuiz() {
+
+    const data =
+        getCurrentData();
+
+
+    if (!data) {
+
+        renderCurrentSubject();
+
+        return;
+
+    }
+
+
+    const questions =
+        data.chapters
+        .flatMap(
+            chapter =>
+                chapter.mcqs.map(
+                    q => ({
+
+                        ...q,
+
+                        chapter:
+                            chapter.name
+
+                    })
+                )
+        );
+
+
+    if (!questions.length) {
+
+        $("mainContent").innerHTML = `
+
+            <div class="empty-state">
+
+                🧠 Quiz questions are being prepared.
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    let score = 0;
+
+
+    $("mainContent").innerHTML = `
+
+        <div id="quizArea">
+
+            ${questions.map(
+                (q, index) => `
+
+                    <article class="quiz-card">
+
+                        <p>
+                            <strong>
+                                Q${index + 1}.
+                            </strong>
+
+                            ${escapeHTML(
+                                q.question
+                            )}
+                        </p>
+
+
+                        <div>
+
+                            ${q.options.map(
+                                (option, optionIndex) => `
+
+                                    <label>
+
+                                        <input
+                                            type="radio"
+                                            name="question-${index}"
+                                            value="${optionIndex}"
+                                        >
+
+                                        ${escapeHTML(option)}
+
+                                    </label>
+
+                                `
+                            ).join("")}
+
+                        </div>
+
+                    </article>
+
+                `
+            ).join("")}
+
+
+            <button
+                class="submit-quiz"
+                onclick="submitQuiz()">
+
+                Submit Quiz
+
+            </button>
+
+        </div>
+
+    `;
+
+
+    window.currentQuiz =
+        questions;
+
+}
+
+
+/* =========================================================
+   16. SUBMIT QUIZ
+========================================================= */
+
+function submitQuiz() {
+
+    const questions =
+        window.currentQuiz || [];
+
+
+    let score = 0;
+
+
+    questions.forEach(
+        (question, index) => {
+
+            const selected =
+                document.querySelector(
+                    `input[name="question-${index}"]:checked`
+                );
+
+
+            if (
+                selected &&
+                Number(selected.value) ===
+                question.answer
+            ) {
+
+                score++;
+
+            }
+
+        }
+    );
+
+
+    const percentage =
+        questions.length
+            ? Math.round(
+                (score / questions.length) * 100
+            )
+            : 0;
+
+
+    userData.quizScores.push({
+
+        date:
+            new Date().toISOString(),
+
+        score,
+
+        total:
+            questions.length,
+
+        percentage
+
+    });
+
+
+    saveUserData();
+
+
+    $("mainContent").innerHTML = `
+
+        <div class="quiz-result">
+
+            <h2>🎉 Quiz Complete!</h2>
+
+            <div class="score">
+
+                ${score}/${questions.length}
+
+            </div>
+
+            <p>
+                ${percentage}% Score
+            </p>
+
+
+            <button
+                onclick="showView('quiz')">
+
+                Try Again
+
+            </button>
+
+        </div>
+
+    `;
+
+}
+
+
+/* =========================================================
+   17. BOOKMARK SYSTEM
+========================================================= */
+
+function bookmarkChapter(id) {
+
+    const index =
+        userData.bookmarks.indexOf(id);
+
+
+    if (index === -1) {
+
+        userData.bookmarks.push(id);
+
+    } else {
+
+        userData.bookmarks.splice(
+            index,
+            1
+        );
+
+    }
+
+
+    saveUserData();
+
+    renderNotes();
+
+}
+
+
+function isBookmarked(id) {
+
+    return userData.bookmarks.includes(id);
+
+}
+
+
+/* =========================================================
+   18. COMPLETION SYSTEM
+========================================================= */
+
+function markCompleted(id) {
+
+    if (
+        !userData.completed.includes(id)
+    ) {
+
+        userData.completed.push(id);
+
+    }
+
+
+    saveUserData();
+
+
+    alert(
+        "✅ Chapter marked as completed!"
+    );
+
+}
+
+
+/* =========================================================
+   19. BOOKMARK VIEW
+========================================================= */
+
+function renderBookmarks() {
+
+    const bookmarks =
+        userData.bookmarks;
+
+
+    if (!bookmarks.length) {
+
+        $("mainContent").innerHTML = `
+
+            <div class="empty-state">
+
+                ❤️ No bookmarks yet.
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    let results = [];
+
+
+    Object.values(STUDY_DATA)
+        .forEach(classData => {
+
+            Object.values(classData)
+                .forEach(subjectData => {
+
+                    subjectData.chapters
+                        .forEach(chapter => {
+
+                            if (
+                                bookmarks.includes(
+                                    chapter.id
+                                )
+                            ) {
+
+                                results.push(
+                                    chapter
+                                );
+
+                            }
+
+                        });
+
+                });
+
+        });
+
+
+    $("mainContent").innerHTML =
+
+        results.map(
+            chapter => `
+
+                <article
+                    class="study-card">
+
+                    <h2>
+
+                        ❤️
+                        ${escapeHTML(
+                            chapter.name
+                        )}
+
+                    </h2>
+
+                    <p>
+
+                        ${escapeHTML(
+                            chapter.notes
+                        )}
+
+                    </p>
+
+                </article>
+
+            `
+        )
+        .join("");
+
+}
+
+
+/* =========================================================
+   20. PROGRESS
+========================================================= */
+
+function renderProgress() {
+
+    const completed =
+        userData.completed.length;
+
+
+    const quizzes =
+        userData.quizScores.length;
+
+
+    const average = quizzes
+
+        ? Math.round(
+            userData.quizScores
+                .reduce(
+                    (sum, q) =>
+                        sum + q.percentage,
+                    0
+                ) / quizzes
+        )
+
+        : 0;
+
+
+    $("mainContent").innerHTML = `
+
+        <div class="progress-card">
+
+            <h2>📊 Your Progress</h2>
+
+
+            <div class="stat">
+
+                <strong>
+                    ${completed}
+                </strong>
+
+                <span>
+                    Chapters Completed
+                </span>
+
+            </div>
+
+
+            <div class="stat">
+
+                <strong>
+                    ${quizzes}
+                </strong>
+
+                <span>
+                    Quizzes Attempted
+                </span>
+
+            </div>
+
+
+            <div class="stat">
+
+                <strong>
+                    ${average}%
+                </strong>
+
+                <span>
+                    Average Quiz Score
+                </span>
+
+            </div>
+
+        </div>
+
+    `;
+
+}
+
+
+/* =========================================================
+   21. VIEW CONTROLLER
+========================================================= */
+
+function showView(view) {
+
+    switch (view) {
+
+        case "notes":
+
+            renderNotes();
+
+            break;
+
+
+        case "questions":
+
+            renderQuestions();
+
+            break;
+
+
+        case "quiz":
+
+            renderQuiz();
+
+            break;
+
+
+        case "bookmarks":
+
+            renderBookmarks();
+
+            break;
+
+
+        case "progress":
+
+            renderProgress();
+
+            break;
+
+    }
+
+}
+
+
+/* =========================================================
+   22. DARK MODE
+========================================================= */
+
+function toggleDarkMode() {
+
+    userData.darkMode =
+        !userData.darkMode;
+
+
+    document.body.classList.toggle(
+        "dark-mode"
+    );
+
+
+    saveUserData();
+
+}
+
+
+/* =========================================================
+   23. SECURITY / TEXT CLEANING
+========================================================= */
+
+function escapeHTML(text) {
+
+    return String(text)
+
+        .replaceAll("&", "&amp;")
+
+        .replaceAll("<", "&lt;")
+
+        .replaceAll(">", "&gt;")
+
+        .replaceAll('"', "&quot;")
+
+        .replaceAll("'", "&#039;");
+
+}
+
+
+/* =========================================================
+   24. START
+========================================================= */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    initializeStudyHub
+);
+```
